@@ -4,16 +4,19 @@ import React, { useState, useEffect } from "react";
 
 export default function Speedometer() {
   const [speed, setSpeed] = useState(0);
+  const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
   const [speedLog, setSpeedLog] = useState([]);
 
   useEffect(() => {
     const watchId = navigator.geolocation.watchPosition(
       (position) => {
         const newSpeed = position.coords.speed;
+        const { latitude, longitude } = position.coords; //lat:緯度,lon:経度
         const currentTime = new Date().toLocaleTimeString();
         setSpeed(newSpeed);
+        setPosition({ latitude, longitude });
         setSpeedLog((oldLog) => [
-          { speed: newSpeed, time: currentTime },
+          { speed: newSpeed, time: currentTime, latitude, longitude },
           ...oldLog,
         ]);
       },
@@ -31,10 +34,12 @@ export default function Speedometer() {
   // CSVファイルとして書き出す関数（BOM付きUTF-8）
   const downloadCSV = () => {
     const csvRows = [
-      ["時間", "速度(m/s)"],
+      ["時間", "速度(km/h)"],
       ...speedLog.map((log) => [
         log.time,
-        log.speed ? log.speed.toFixed(2) : "データなし",
+        log.speed ? (log.speed.toFixed(2) * 60 * 60) / 1000 : "0",
+        log.latitude.toFixed(5),
+        log.longitude.toFixed(5),
       ]),
     ];
     const csvContent = "\uFEFF" + csvRows.map((e) => e.join(",")).join("\n");
@@ -50,7 +55,10 @@ export default function Speedometer() {
 
   return (
     <div>
-      <h1>現在の速度: {speed ? `${speed.toFixed(2)} m/s` : "データなし"}</h1>
+      <h1>
+        現在の速度:{" "}
+        {speed ? `${(speed.toFixed(2) * 60 * 60) / 1000} km/h` : "0 km/h"}
+      </h1>
       <button onClick={downloadCSV}>CSVとして保存</button>
       <div>
         <h2>速度ログ:</h2>
@@ -58,7 +66,9 @@ export default function Speedometer() {
           {speedLog.map((log, index) => (
             <li key={index}>
               {log.time} -{" "}
-              {log.speed ? `${log.speed.toFixed(2)} m/s` : "データなし"}
+              {log.speed
+                ? `${(log.speed.toFixed(2) * 60 * 60) / 1000} km/h`
+                : "0 km/h"}
             </li>
           ))}
         </ul>
