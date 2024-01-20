@@ -23,6 +23,8 @@ export default function Speedometer() {
       { enableHighAccuracy: true }
     );
 
+    //a
+
     return () => navigator.geolocation.clearWatch(watchId);
   }, []);
 
