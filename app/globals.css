@@ -24,3 +24,28 @@ body {
     text-wrap: balance;
   }
 }
+
+.text-5vh {
+  font-size: 5vh;
+  font-weight: bold;
+}
+
+.text-4vh {
+  font-size: 4vh;
+  font-weight: bold;
+}
+
+.text-3vh {
+  font-size: 3vh;
+  font-weight: bold;
+}
+
+.text-2vh {
+  font-size: 2vh;
+  font-weight: bold;
+}
+
+.text-1vh {
+  font-size: 1vh;
+  font-weight: bold;
+}
