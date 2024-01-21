@@ -46,6 +46,7 @@ export default function Speedometer() {
           altitudeAccuracy,
           heading,
         });
+        console.log(speed);
         setSpeedLog((oldLog) => [
           ...oldLog,
           {
@@ -76,34 +77,38 @@ export default function Speedometer() {
       const recentLogs = speedLog.filter(
         (log) => new Date(log.time) >= threeMinutesAgo
       );
-      const newAverageSpeed =
-        recentLogs.reduce((acc, log) => acc + (log.speed || 0), 0) /
-        recentLogs.length;
 
-      setAverageSpeed(newAverageSpeed);
+      if (recentLogs.length > 0) {
+        const newAverageSpeed =
+          recentLogs.reduce((acc, log) => acc + (log.speed || 0), 0) /
+          recentLogs.length;
 
-      // 速度が5 km/h以上かどうかのチェック
-      if (newAverageSpeed >= 5 / 3.6) setIsOver5kmh(true);
-      if (newAverageSpeed <= 5 / 3.6 && isOver5kmh)
-        setIsCongestionDetected(true); // 渋滞検知
+        setAverageSpeed(newAverageSpeed);
+        console.log(newAverageSpeed);
+
+        // 速度が5 km/h以上かどうかのチェック
+        if (newAverageSpeed >= 5 / 3.6) setIsOver5kmh(true);
+        if (newAverageSpeed <= 5 / 3.6 && isOver5kmh)
+          setIsCongestionDetected(true);
+      }
     }, 1000);
 
     return () => clearInterval(intervalId);
   }, [speedLog]);
 
-  const calculateAverageSpeed = () => {
-    const threeMinutesAgo = new Date(new Date().getTime() - 180000);
-    const recentLogs = speedLog.filter(
-      (log) => new Date(log.time) >= threeMinutesAgo
-    );
+  // const calculateAverageSpeed = () => {
+  //   const threeMinutesAgo = new Date(new Date().getTime() - 180000);
+  //   const recentLogs = speedLog.filter(
+  //     (log) => new Date(log.time) >= threeMinutesAgo
+  //   );
 
-    const calculatedAverageSpeed =
-      recentLogs.reduce((acc, log) => acc + (log.speed || 0), 0) /
-      recentLogs.length;
+  //   const calculatedAverageSpeed =
+  //     recentLogs.reduce((acc, log) => acc + (log.speed || 0), 0) /
+  //     recentLogs.length;
 
-    setAverageSpeed(calculatedAverageSpeed); // 平均速度を保存
-    setIsCongestion(calculatedAverageSpeed <= 30 / 3.6); // 渋滞検知の状態を更新
-  };
+  //   setAverageSpeed(calculatedAverageSpeed); // 平均速度を保存
+  //   setIsCongestion(calculatedAverageSpeed <= 30 / 3.6); // 渋滞検知の状態を更新
+  // };
 
   const downloadCSV = () => {
     const csvRows = [
@@ -164,9 +169,9 @@ export default function Speedometer() {
           3分間の平均速度:{" "}
           {averageSpeed ? `${(averageSpeed * 3.6).toFixed(2)} km/h` : "計測中"}
         </h2>
-        <p>30km/h以下</p>
+        <p>3分間平均速度30km/h以下</p>
         {averageSpeed <= 30 / 3.6 && <h2>YES</h2>}
-        <p>5km/h以上</p>
+        <p>速度5km/h以上</p>
         {isOver5kmh && <h2>YES</h2>}
         <p>渋滞！！</p>
         {isCongestionDetected && <h2>YES</h2>}
