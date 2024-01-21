@@ -33,8 +33,8 @@ const MapWithCurrentLocation = ({ apiKey }) => {
               map: map,
               icon: {
                 url: customIconUrl,
-                // 進行方向に合わせてアイコンを回転させる
-                rotation: newHeading,
+                // // 進行方向に合わせてアイコンを回転させる
+                // rotation: newHeading,
               },
             })
           );
