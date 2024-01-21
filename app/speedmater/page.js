@@ -23,6 +23,7 @@ export default function Speedometer() {
   const [isCongestionDetected, setIsCongestionDetected] = useState(false);
   const [averageSpeed, setAverageSpeed] = useState(null);
   const [isCongestion, setIsCongestion] = useState(false);
+  const [sumSpeed, setSumSpeed] = useState(0);
 
   useEffect(() => {
     const watchId = navigator.geolocation.watchPosition(
@@ -61,6 +62,7 @@ export default function Speedometer() {
           }, // 新しいログを配列の最後に追加
         ]);
       },
+
       (error) => {
         console.error(error);
       },
@@ -71,44 +73,30 @@ export default function Speedometer() {
   }, []);
 
   useEffect(() => {
-    // 1秒ごとに直近3分間の平均速度を計算
-    const intervalId = setInterval(() => {
-      const threeMinutesAgo = new Date(new Date().getTime() - 180000);
-      const recentLogs = speedLog.filter(
+    const calculateAverageSpeed = () => {
+      const threeMinutesAgo = new Date(Date.now() - 180000); // 3分前の時刻
+      const recentSpeeds = speedLog.filter(
         (log) => new Date(log.time) >= threeMinutesAgo
       );
 
-      if (recentLogs.length > 0) {
-        const newAverageSpeed =
-          recentLogs.reduce((acc, log) => acc + (log.speed || 0), 0) /
-          recentLogs.length;
-
-        setAverageSpeed(newAverageSpeed);
-        console.log(newAverageSpeed);
-
-        // 速度が5 km/h以上かどうかのチェック
-        if (newAverageSpeed >= 5 / 3.6) setIsOver5kmh(true);
-        if (newAverageSpeed <= 5 / 3.6 && isOver5kmh)
-          setIsCongestionDetected(true);
+      if (recentSpeeds.length > 0) {
+        // データが存在する場合、平均速度の計算
+        const totalSpeed = recentSpeeds.reduce(
+          (sum, log) => sum + log.speed,
+          0
+        );
+        const averageSpeed = totalSpeed / recentSpeeds.length;
+        setAverageSpeed(averageSpeed); // 平均速度を設定
+      } else {
+        // データが存在しない場合
+        console.log("過去3分間のデータが存在しません。");
+        setAverageSpeed(null); // 平均速度をnullに設定
       }
-    }, 1000);
+    };
 
-    return () => clearInterval(intervalId);
+    const interval = setInterval(calculateAverageSpeed, 10000); // 10秒ごとに更新
+    return () => clearInterval(interval);
   }, [speedLog]);
-
-  // const calculateAverageSpeed = () => {
-  //   const threeMinutesAgo = new Date(new Date().getTime() - 180000);
-  //   const recentLogs = speedLog.filter(
-  //     (log) => new Date(log.time) >= threeMinutesAgo
-  //   );
-
-  //   const calculatedAverageSpeed =
-  //     recentLogs.reduce((acc, log) => acc + (log.speed || 0), 0) /
-  //     recentLogs.length;
-
-  //   setAverageSpeed(calculatedAverageSpeed); // 平均速度を保存
-  //   setIsCongestion(calculatedAverageSpeed <= 30 / 3.6); // 渋滞検知の状態を更新
-  // };
 
   const downloadCSV = () => {
     const csvRows = [
