@@ -1,4 +1,5 @@
 "use client";
+"use strict";
 
 import React, { useRef, useState, useEffect } from "react";
 import { Wrapper } from "@googlemaps/react-wrapper";
