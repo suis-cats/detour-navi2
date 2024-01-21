@@ -8,23 +8,6 @@ export default function SearchPage() {
   const [lon, setLon] = useState("");
   const [stores, setStores] = useState([]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/search?lat=${lat}&lon=${lon}`
-      );
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
-      const data = await response.json();
-      setStores(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <div>
       <h1>近くのコンビニを検索</h1>
