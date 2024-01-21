@@ -79,6 +79,12 @@ export default function Speedometer() {
       }, 180000); // 3分後に開始
     }
 
+    //今だけ！！！！
+    setTimeout(() => {
+      intervalId = setInterval(calculateAverageSpeed, 1000); // 10秒ごと
+    }, 180000);
+    ///後から消す！！！
+
     return () => {
       if (intervalId) clearInterval(intervalId);
     };
