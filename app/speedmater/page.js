@@ -21,9 +21,12 @@ export default function Speedometer() {
 
   const [isOver5kmh, setIsOver5kmh] = useState(false);
   const [isCongestionDetected, setIsCongestionDetected] = useState(false);
-  const [averageSpeed, setAverageSpeed] = useState(null);
+
   const [isCongestion, setIsCongestion] = useState(false);
   const [sumSpeed, setSumSpeed] = useState(0);
+
+  const [speedHistory, setSpeedHistory] = useState([]);
+  const [averageSpeed, setAverageSpeed] = useState(0);
 
   useEffect(() => {
     const watchId = navigator.geolocation.watchPosition(
@@ -72,31 +75,23 @@ export default function Speedometer() {
     return () => navigator.geolocation.clearWatch(watchId);
   }, []);
 
+  // 速度が変わるたびに履歴を更新
   useEffect(() => {
-    const calculateAverageSpeed = () => {
-      const threeMinutesAgo = new Date(Date.now() - 180000); // 3分前の時刻
-      const recentSpeeds = speedLog.filter(
-        (log) => new Date(log.time) >= threeMinutesAgo
-      );
+    const now = new Date();
+    const newHistory = speedHistory.filter(
+      (record) => now - record.time < 180000
+    ); // 3分より古い記録を削除
+    newHistory.push({ speed, time: now });
+    console.log(speed);
+    setSpeedHistory(newHistory);
 
-      if (recentSpeeds.length > 0) {
-        // データが存在する場合、平均速度の計算
-        const totalSpeed = recentSpeeds.reduce(
-          (sum, log) => sum + log.speed,
-          0
-        );
-        const averageSpeed = totalSpeed / recentSpeeds.length;
-        setAverageSpeed(averageSpeed); // 平均速度を設定
-      } else {
-        // データが存在しない場合
-        console.log("過去3分間のデータが存在しません。");
-        setAverageSpeed(null); // 平均速度をnullに設定
-      }
-    };
-
-    const interval = setInterval(calculateAverageSpeed, 10000); // 10秒ごとに更新
-    return () => clearInterval(interval);
-  }, [speedLog]);
+    // 平均速度を計算
+    const totalSpeed = newHistory.reduce(
+      (acc, record) => acc + record.speed,
+      0
+    );
+    setAverageSpeed(totalSpeed / newHistory.length);
+  }, [speed]);
 
   const downloadCSV = () => {
     const csvRows = [
