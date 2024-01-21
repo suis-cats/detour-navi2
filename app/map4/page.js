@@ -42,7 +42,7 @@ const MapWithCurrentLocation = ({ apiKey }) => {
           marker.setPosition(newPos);
           marker.setIcon({
             url: customIconUrl,
-            rotation: newHeading,
+            // rotation: newHeading,
           });
         }
       },
