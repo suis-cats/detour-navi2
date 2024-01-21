@@ -11,7 +11,7 @@ export default function SearchPage() {
   return (
     <div>
       <h1>近くのコンビニを検索</h1>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div>
           <label>緯度: </label>
           <input
