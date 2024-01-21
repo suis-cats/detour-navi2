@@ -70,14 +70,21 @@ export default function Speedometer() {
   useEffect(() => {
     let intervalId;
 
-    // 速度が10 km/h以上になったら、3分後から10秒ごとに平均速度を計算
-    if (speed >= 10 / 3.6 && trackingStartTime === null) {
-      setTrackingStartTime(new Date());
+    // // 速度が10 km/h以上になったら、3分後から10秒ごとに平均速度を計算
+    // if (speed >= 10 / 3.6 && trackingStartTime === null) {
+    //   setTrackingStartTime(new Date());
 
-      setTimeout(() => {
-        intervalId = setInterval(calculateAverageSpeed, 10000); // 10秒ごと
-      }, 180000); // 3分後に開始
-    }
+    //   setTimeout(() => {
+    //     intervalId = setInterval(calculateAverageSpeed, 10000); // 10秒ごと
+    //   }, 180000); // 3分後に開始
+    // }
+
+    //今だけ！！！！
+    setTrackingStartTime(new Date());
+    setTimeout(() => {
+      intervalId = setInterval(calculateAverageSpeed, 1000); // 10秒ごと
+    });
+    ///後から消す！！！
 
     return () => {
       if (intervalId) clearInterval(intervalId);
@@ -134,7 +141,12 @@ export default function Speedometer() {
 
   return (
     <div>
-      <h1>現在の速度: {speed ? `${speed.toFixed(2)} m/s` : "0 m/s"}</h1>
+      <h1>
+        現在の速度: {speed ? `${speed.toFixed(2)} m/s` : "0 m/s"}
+        {"　"}
+        {speed ? `${speed.toFixed(2) * 3.6} km/h` : "0 km/h"}
+      </h1>
+
       <div>
         現在の座標:{" "}
         {`緯度: ${position.latitude.toFixed(
@@ -153,7 +165,7 @@ export default function Speedometer() {
           {averageSpeed ? `${(averageSpeed * 3.6).toFixed(2)} km/h` : "計測中"}
         </h2>
         {isCongestion && <h2>渋滞検知</h2>}
-        <h2>速度ログ:</h2>
+        <h>速度ログ</h>
         <ul>
           {speedLog
             .slice()
@@ -164,8 +176,8 @@ export default function Speedometer() {
                 index // 配列を反転して表示
               ) => (
                 <li key={index}>
-                  {log.time} - {log.speed?.toFixed(2) ?? "0"} m/s - course(°):{" "}
-                  {log.heading?.toFixed(2) ?? "N/A"}°
+                  {log.time} - {log.speed?.toFixed(2) * 3.6 ?? "0"} km/h -
+                  course(°): {log.heading?.toFixed(2) ?? "N/A"}°
                 </li>
               )
             )}
