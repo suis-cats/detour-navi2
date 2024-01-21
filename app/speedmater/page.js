@@ -3,7 +3,11 @@
 import React, { useState, useEffect } from "react";
 
 export default function Speedometer() {
+  // スピードメーター
   const [speed, setSpeed] = useState(0);
+  const [speedLog, setSpeedLog] = useState([]);
+
+  // 位置情報
   const [position, setPosition] = useState({
     latitude: 0,
     longitude: 0,
@@ -12,7 +16,11 @@ export default function Speedometer() {
     altitudeAccuracy: 0,
     heading: 0,
   });
-  const [speedLog, setSpeedLog] = useState([]);
+
+  // 渋滞検知
+  const [trackingStartTime, setTrackingStartTime] = useState(null);
+  const [averageSpeed, setAverageSpeed] = useState(null);
+  const [isCongestion, setIsCongestion] = useState(false);
 
   useEffect(() => {
     const watchId = navigator.geolocation.watchPosition(
@@ -58,6 +66,37 @@ export default function Speedometer() {
 
     return () => navigator.geolocation.clearWatch(watchId);
   }, []);
+
+  useEffect(() => {
+    let intervalId;
+
+    // 速度が10 km/h以上になったら、3分後から10秒ごとに平均速度を計算
+    if (speed >= 10 / 3.6 && trackingStartTime === null) {
+      setTrackingStartTime(new Date());
+
+      setTimeout(() => {
+        intervalId = setInterval(calculateAverageSpeed, 10000); // 10秒ごと
+      }, 180000); // 3分後に開始
+    }
+
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [speed, trackingStartTime]);
+
+  const calculateAverageSpeed = () => {
+    const threeMinutesAgo = new Date(new Date().getTime() - 180000);
+    const recentLogs = speedLog.filter(
+      (log) => new Date(log.time) >= threeMinutesAgo
+    );
+
+    const calculatedAverageSpeed =
+      recentLogs.reduce((acc, log) => acc + (log.speed || 0), 0) /
+      recentLogs.length;
+
+    setAverageSpeed(calculatedAverageSpeed); // 平均速度を保存
+    setIsCongestion(calculatedAverageSpeed <= 30 / 3.6); // 渋滞検知の状態を更新
+  };
 
   const downloadCSV = () => {
     const csvRows = [
@@ -109,6 +148,11 @@ export default function Speedometer() {
       </div>
       <button onClick={downloadCSV}>CSVとして保存</button>
       <div>
+        <h2>
+          3分間の平均速度:{" "}
+          {averageSpeed ? `${(averageSpeed * 3.6).toFixed(2)} km/h` : "計測中"}
+        </h2>
+        {isCongestion && <h2>渋滞検知</h2>}
         <h2>速度ログ:</h2>
         <ul>
           {speedLog

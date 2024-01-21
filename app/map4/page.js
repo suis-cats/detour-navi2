@@ -32,9 +32,7 @@ const MapWithCurrentLocation = ({ apiKey }) => {
               position: newPos,
               map: map,
               icon: {
-                url: customIconUrl,
                 // // 進行方向に合わせてアイコンを回転させるa
-
                 // rotation: newHeading,
               },
             })
@@ -42,8 +40,8 @@ const MapWithCurrentLocation = ({ apiKey }) => {
         } else {
           marker.setPosition(newPos);
           marker.setIcon({
+            //markerの色を青色に
             url: customIconUrl,
-            // rotation: newHeading,
           });
         }
       },
