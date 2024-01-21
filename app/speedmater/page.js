@@ -18,7 +18,9 @@ export default function Speedometer() {
   });
 
   // 渋滞検知
-  const [trackingStartTime, setTrackingStartTime] = useState(null);
+
+  const [isOver5kmh, setIsOver5kmh] = useState(false);
+  const [isCongestionDetected, setIsCongestionDetected] = useState(false);
   const [averageSpeed, setAverageSpeed] = useState(null);
   const [isCongestion, setIsCongestion] = useState(false);
 
@@ -68,28 +70,26 @@ export default function Speedometer() {
   }, []);
 
   useEffect(() => {
-    let intervalId;
+    // 1秒ごとに直近3分間の平均速度を計算
+    const intervalId = setInterval(() => {
+      const threeMinutesAgo = new Date(new Date().getTime() - 180000);
+      const recentLogs = speedLog.filter(
+        (log) => new Date(log.time) >= threeMinutesAgo
+      );
+      const newAverageSpeed =
+        recentLogs.reduce((acc, log) => acc + (log.speed || 0), 0) /
+        recentLogs.length;
 
-    // // 速度が10 km/h以上になったら、3分後から10秒ごとに平均速度を計算
-    // if (speed >= 10 / 3.6 && trackingStartTime === null) {
-    //   setTrackingStartTime(new Date());
+      setAverageSpeed(newAverageSpeed);
 
-    //   setTimeout(() => {
-    //     intervalId = setInterval(calculateAverageSpeed, 10000); // 10秒ごと
-    //   }, 180000); // 3分後に開始
-    // }
+      // 速度が5 km/h以上かどうかのチェック
+      if (newAverageSpeed >= 5 / 3.6) setIsOver5kmh(true);
+      if (newAverageSpeed <= 5 / 3.6 && isOver5kmh)
+        setIsCongestionDetected(true); // 渋滞検知
+    }, 1000);
 
-    //今だけ！！！！
-    setTrackingStartTime(new Date());
-    setTimeout(() => {
-      intervalId = setInterval(calculateAverageSpeed, 1000); // 10秒ごと
-    });
-    ///後から消す！！！
-
-    return () => {
-      if (intervalId) clearInterval(intervalId);
-    };
-  }, [speed, trackingStartTime]);
+    return () => clearInterval(intervalId);
+  }, [speedLog]);
 
   const calculateAverageSpeed = () => {
     const threeMinutesAgo = new Date(new Date().getTime() - 180000);
@@ -164,7 +164,12 @@ export default function Speedometer() {
           3分間の平均速度:{" "}
           {averageSpeed ? `${(averageSpeed * 3.6).toFixed(2)} km/h` : "計測中"}
         </h2>
-        {isCongestion && <h2>渋滞検知</h2>}
+        <p>30km/h以下</p>
+        {averageSpeed <= 30 / 3.6 && <h2>YES</h2>}
+        <p>5km/h以上</p>
+        {isOver5kmh && <h2>YES</h2>}
+        <p>渋滞！！</p>
+        {isCongestionDetected && <h2>YES</h2>}
         <h>速度ログ</h>
         <ul>
           {speedLog
