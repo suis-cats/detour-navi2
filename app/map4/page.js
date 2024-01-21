@@ -12,7 +12,7 @@ const MapWithCurrentLocation = ({ apiKey }) => {
   var customIconUrl =
     "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
 
-  // 現在地の追跡とマーカーの設定
+  // 現在地の追跡とマーカーの設定   a
   useEffect(() => {
     const watcher = navigator.geolocation.watchPosition(
       (position) => {
