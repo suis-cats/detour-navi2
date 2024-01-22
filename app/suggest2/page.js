@@ -11,15 +11,17 @@ export default function Suggest() {
       style={{ height: "100vh" }}
     >
       <div>
-        <h1 className="mb-20">ありがとうございます</h1>
-        <h3 className="mb-4">
-          今からは，実験のためコンビニに行くようにお願いします．
+        <h1 className="mb-40 font-bold">ありがとうございます</h1>
+        <h3 className="mb-40 font-bold">
+          今回は実験のため，好きなタイミングでいいので，コンビニに行くようにお願いします．
         </h3>
-        <Button onClick={() => router.push("/speedmeter")}>
+        <Button className="btn-lg" onClick={() => router.push("/map3")}>
           コンビニに行く
         </Button>
-        <div className="mt-4"> </div>
-        <Button onClick={() => router.push("/end")}>時間がない</Button>
+        <div className="mt-4 "> </div>
+        <Button className="btn-lg" onClick={() => router.push("/end")}>
+          時間がない
+        </Button>
       </div>
     </div>
   );
