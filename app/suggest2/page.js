@@ -28,7 +28,7 @@ export default function Suggest() {
           className="btn-lg btn-info"
           onClick={() => router.push("/map3")}
         >
-          コンビニ
+          コンビニを検索
         </Button>
         <div className="mt-4 "> </div>
         <Button className="btn-lg btn-info" onClick={() => router.push("/end")}>
