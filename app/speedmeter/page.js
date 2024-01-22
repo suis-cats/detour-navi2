@@ -279,9 +279,7 @@ export default function Speedometer() {
       </div> */}
 
           <div>
-            <p style={{ fontSize: "5vw", color: "grey" }}>
-              3分間の平均速度（30km~計測開始）:{" "}
-            </p>
+            <p style={{ fontSize: "5vw", color: "grey" }}>3分間の平均速度: </p>
 
             {averageSpeed ? (
               `<p style={{ fontSize: "10vw", fontWeight: "bold" }}>${(
@@ -296,7 +294,7 @@ export default function Speedometer() {
             )}
 
             <Button
-              className="btn btn-info mb-4"
+              className="btn btn-dark mb-4"
               onClick={() => setIsCongestionDetected(true)}
             >
               提案テスト用
@@ -309,7 +307,7 @@ export default function Speedometer() {
         <p>渋滞！！</p>
         {isCongestionDetected ? <h2>YES</h2> : <h2>NO</h2>}
         <h>速度ログ</h> */}
-            <Button className="btn-info mb-4" onClick={downloadCSV}>
+            <Button className="btn-dark mb-4" onClick={downloadCSV}>
               CSVとして保存
             </Button>
             <div className="m-60">　　　</div>
