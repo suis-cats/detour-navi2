@@ -1,11 +1,14 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import { Button } from "react-bootstrap";
 
 const GoogleMapConvenienceStores = () => {
   const mapRef = useRef(null);
   const [map, setMap] = useState(null);
   const [convenienceStores, setConvenienceStores] = useState([]); // コンビニのリストを管理する状態
   const [markers, setMarkers] = useState([]);
+
+  const ref = useRef();
 
   // Google Maps APIをロードする
   useEffect(() => {
@@ -18,7 +21,6 @@ const GoogleMapConvenienceStores = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
           initMap(position.coords.latitude, position.coords.longitude);
-          updateLocation(); // 位置情報を初期化後に更新
         });
       }
     };
@@ -32,6 +34,20 @@ const GoogleMapConvenienceStores = () => {
       zoom: 15,
     });
     setMap(map);
+
+    var customIconUrl =
+      "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
+
+    // 現在地のマーカーを追加
+    const currentLocationMarker = new window.google.maps.Marker({
+      position: { lat, lng },
+      map: map,
+      title: "現在地",
+      icon: {
+        url: customIconUrl,
+        scaledSize: new google.maps.Size(40, 40),
+      },
+    });
 
     // コンビニを検索する
     searchNearbyConvenienceStores(map, lat, lng);
@@ -76,8 +92,8 @@ const GoogleMapConvenienceStores = () => {
     google.maps.event.addListener(marker, "click", function () {
       const contentString = `
       <div>
-          Google Mapに遷移します．
-        <button type="button" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${markerInfo.lat},${markerInfo.lng}', '_blank')">行く</button>
+          Google Mapで向かってください
+        <Button type="button" class="btn btn-primary" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${markerInfo.lat},${markerInfo.lng}', '_blank')">行く</Button>
       </div>
       `;
       infoWindow.setContent(contentString);
@@ -87,7 +103,7 @@ const GoogleMapConvenienceStores = () => {
 
   return (
     <div>
-      <div ref={mapRef} style={{ width: "100%", height: "400px" }} />
+      <div ref={mapRef} style={{ width: "100vw", height: "90vh" }} />
       <ul>
         {convenienceStores.map((store, index) => (
           <li key={index}>{store.name}</li>
