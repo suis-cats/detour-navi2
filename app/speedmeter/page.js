@@ -231,7 +231,11 @@ export default function Speedometer() {
       <div>
         <p style={{ fontSize: "5vw" }}>3分間の平均速度（30km~計測開始）: </p>
         <p style={{ fontSize: "10vw", fontWeight: "bold" }}>
-          {averageSpeed ? `${(averageSpeed * 3.6).toFixed(2)} km/h` : "計測中"}
+          {averageSpeed ? (
+            `${(averageSpeed * 3.6).toFixed(2)} km/h`
+          ) : (
+            <p className="mb-40">"計測中"</p>
+          )}
         </p>
 
         <Button
@@ -251,6 +255,7 @@ export default function Speedometer() {
         <Button className="btn-info mb-4" onClick={downloadCSV}>
           CSVとして保存
         </Button>
+
         {/* <ul>
           {speedLog
             .slice()
