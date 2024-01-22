@@ -15,11 +15,14 @@ export default function Suggest() {
         <h3 className="mb-40 font-bold">
           今回は実験のため，好きなタイミングでいいので，コンビニに行くようにお願いします．
         </h3>
-        <Button className="btn-lg" onClick={() => router.push("/map3")}>
+        <Button
+          className="btn-lg btn-info"
+          onClick={() => router.push("/map3")}
+        >
           コンビニに行く
         </Button>
         <div className="mt-4 "> </div>
-        <Button className="btn-lg" onClick={() => router.push("/end")}>
+        <Button className="btn-lg btn-info" onClick={() => router.push("/end")}>
           時間がない
         </Button>
       </div>

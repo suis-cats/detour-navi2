@@ -113,7 +113,7 @@ const GoogleMapConvenienceStores = () => {
       const contentString = `
       <div>
         
-        <Button type="button" className="" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${markerInfo.lat},${markerInfo.lng}', '_blank')">GoogleMapで行く</Button>
+        <Button type="button" className="btn btn-info" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${markerInfo.lat},${markerInfo.lng}', '_blank')">GoogleMapで行く</Button>
       </div>
       `;
       infoWindow.setContent(contentString);
@@ -126,7 +126,7 @@ const GoogleMapConvenienceStores = () => {
       <div ref={mapRef} style={{ width: "100vw", height: "80vh" }} />
       <Button
         type="button"
-        class="btn btn-outline-primary btn-lg"
+        class="btn btn-info btn-lg"
         onClick={() => router.push("/speedmeter")}
         style={{
           padding: "15px 30px", // ボタンの内部余白を増やす
@@ -139,7 +139,7 @@ const GoogleMapConvenienceStores = () => {
       </Button>
       <Button
         type="button"
-        class="btn btn-outline-primary btn-lg"
+        class="btn btn-info btn-lg"
         style={{
           padding: "15px 30px", // ボタンの内部余白を増やす
           fontSize: "20px", // フォントサイズを大きくする
