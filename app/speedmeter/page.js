@@ -213,7 +213,7 @@ export default function Speedometer() {
         現在の速度:
         {/* {speed ? `${speed.toFixed(2)} m/s` : "0 m/s"} */}
         {"　"}
-        {speed ? `${speed.toFixed(2) * 3.6} km/h` : "0 km/h"}
+        {speed ? `${(speed * 3.6).toFixed(2)} km/h` : "0 km/h"}
       </p>
 
       {/* <div>
