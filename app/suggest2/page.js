@@ -15,9 +15,7 @@ export default function Suggest() {
         <h3 className="mb-4">
           今からは，実験のためコンビニに行くようにお願いします．
         </h3>
-        <Button onClick={() => router.push("/speedmeter")}>
-          コンビニに行く
-        </Button>
+        <Button onClick={() => router.push("/map3")}>コンビニに行く</Button>
         <div className="mt-4"> </div>
         <Button onClick={() => router.push("/end")}>時間がない</Button>
       </div>

@@ -25,7 +25,11 @@ export default function Suggest() {
           </Button>
         </div>
         <div>
-          <Button type="button" className="btn-secondary mb-60">
+          <Button
+            type="button"
+            className="btn-secondary mb-60"
+            onClick={() => router.push("/suggest2")}
+          >
             寄りたくない
           </Button>
         </div>

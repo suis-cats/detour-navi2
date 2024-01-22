@@ -126,7 +126,6 @@ const GoogleMapConvenienceStores = () => {
           width: "50%", // ボタンの幅を広げる
           maxWidth: "300px", // 最大幅を設定する
         }}
-        disabled
       >
         戻る
       </Button>
