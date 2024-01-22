@@ -334,7 +334,7 @@ export default function Speedometer() {
         </div>
       ) : (
         <div
-          style={{ backgroundColor: "black", width: "100vw", height: "100vh" }}
+          style={{ backgroundColor: "black", width: "120vw", height: "120vh" }}
         >
           <p style={{ fontSize: "10vw", fontWeight: "bold", color: "grey" }}>
             速度 {/* {speed ? `${speed.toFixed(2)} m/s` : "0 m/s"} */}
