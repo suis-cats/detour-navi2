@@ -22,7 +22,7 @@ export default function Suggest() {
           現在，道が混んでいます．
         </p>
 
-        <p className="mb-32" style={{ fontSize: "7vw", fontWeight: "bolder" }}>
+        <p className="mb-16" style={{ fontSize: "7vw", fontWeight: "bolder" }}>
           コンビニで休憩しませんか？
         </p>
 
