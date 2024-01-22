@@ -6,13 +6,14 @@ import { useRouter } from "next/navigation";
 export default function Suggest() {
   const router = useRouter();
   return (
-    <div
-      className="d-flex justify-content-center align-items-center"
-      style={{ height: "100vh" }}
-    >
+    <div className="d-flex justify-content-center " style={{ height: "100vh" }}>
       <div>
-        <p>提案</p>
-        <p>コンビニに寄りませんか？</p>
+        <p className="mt-5 font-bold h1 text-center text-top">
+          寄り道提案システム
+        </p>
+        <p className="mt-60 font-bold text-large">現在，道が混んでいます．</p>
+
+        <h1 className="mb-20">コンビニで休憩しませんか？</h1>
 
         <div className="mb-3 mt-20">
           <Button
@@ -24,7 +25,7 @@ export default function Suggest() {
           </Button>
         </div>
         <div>
-          <Button type="button" className="btn-secondary">
+          <Button type="button" className="btn-secondary mb-60">
             寄りたくない
           </Button>
         </div>
