@@ -190,6 +190,13 @@ export default function Speedometer() {
           3分間の平均速度:{" "}
           {averageSpeed ? `${(averageSpeed * 3.6).toFixed(2)} km/h` : "計測中"}
         </h2>
+
+        <Button
+          className="btn btn-info"
+          onClick={() => setIsCongestionDetected(true)}
+        >
+          混雑検知テスト用
+        </Button>
         <p>3分間平均速度30km/h以下</p>
         {averageSpeed <= 30 / 3.6 && <h2>YES</h2>}
         <p>速度5km/h以上</p>
@@ -213,13 +220,6 @@ export default function Speedometer() {
               )
             )}
         </ul>
-
-        <Button
-          className="btn btn-info mb-20"
-          onClick={() => setIsCongestionDetected(true)}
-        >
-          混雑検知テスト用
-        </Button>
       </div>
     </div>
   );

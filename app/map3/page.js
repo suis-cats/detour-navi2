@@ -121,6 +121,8 @@ const GoogleMapConvenienceStores = () => {
 
   return (
     <div>
+      <p style={{ margin: "0" }}>現在地付近のコンビニです</p>
+      <p style={{ margin: "0" }}>ピンを選択してください</p>
       <div ref={mapRef} style={{ width: "100vw", height: "80vh" }} />
       <Button
         type="button"
@@ -140,7 +142,7 @@ const GoogleMapConvenienceStores = () => {
         {" "}
         再読み込み
       </Button>
-      <p>現在地付近のコンビニです．選択して「行く」を押してください</p>
+      <p>コンビニのピンを選んでください</p>
 
       <ul>
         {convenienceStores.map((store, index) => (
