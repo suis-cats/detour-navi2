@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { Button } from "react-bootstrap";
 
 import { useRouter } from "next/navigation";
 
@@ -154,6 +155,16 @@ export default function Speedometer() {
   return (
     <div>
       <h1>そのまま運転し続けてください</h1>
+      <h1>運転を続けてください</h1>
+      <div>
+        <Button
+          type="button"
+          className="btn btn-danger"
+          onClick={() => router.push("/end")}
+        >
+          運転終了
+        </Button>
+      </div>
       <h1>
         現在の速度: {speed ? `${speed.toFixed(2)} m/s` : "0 m/s"}
         {"　"}
@@ -171,7 +182,9 @@ export default function Speedometer() {
         {position.accuracy.toFixed(2)} m, <br />
         高度の精度: {position.altitudeAccuracy?.toFixed(2) ?? "N/A"} m
       </div>
-      <button onClick={downloadCSV}>CSVとして保存</button>
+      <Button className="btn-success" onClick={downloadCSV}>
+        CSVとして保存
+      </Button>
       <div>
         <h2>
           3分間の平均速度:{" "}
@@ -201,7 +214,12 @@ export default function Speedometer() {
             )}
         </ul>
 
-        <button onClick={() => setIsCongestionDetected(true)}>混雑検知</button>
+        <Button
+          className="btn btn-info mb-20"
+          onClick={() => setIsCongestionDetected(true)}
+        >
+          混雑検知テスト用
+        </Button>
       </div>
     </div>
   );

@@ -20,6 +20,9 @@ const GoogleMapConvenienceStores = () => {
 
   // Google Maps APIをロードする
   useEffect(() => {
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = "hidden";
+
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
     const script = document.createElement("script");
     script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
@@ -33,6 +36,9 @@ const GoogleMapConvenienceStores = () => {
       }
     };
     document.head.appendChild(script);
+    return () => {
+      document.body.style.overflow = originalStyle;
+    };
   }, []);
 
   // Google Mapを初期化する関数
@@ -41,6 +47,8 @@ const GoogleMapConvenienceStores = () => {
       center: { lat, lng },
       zoom: 15,
       heading: 45,
+      mayTypeId: google.maps.MapTypeId.ROADMAP,
+      gestureHandling: "greedy",
     });
     setMap(map);
 
@@ -104,8 +112,8 @@ const GoogleMapConvenienceStores = () => {
     google.maps.event.addListener(marker, "click", function () {
       const contentString = `
       <div>
-          Google Map
-        <Button type="button" class="btn btn-primary" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${markerInfo.lat},${markerInfo.lng}', '_blank')">行く</Button>
+        
+        <Button type="button" className="" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${markerInfo.lat},${markerInfo.lng}', '_blank')">GoogleMapで行く</Button>
       </div>
       `;
       infoWindow.setContent(contentString);
@@ -115,7 +123,7 @@ const GoogleMapConvenienceStores = () => {
 
   return (
     <div>
-      <div ref={mapRef} style={{ width: "100vw", height: "90vh" }} />
+      <div ref={mapRef} style={{ width: "100vw", height: "80vh" }} />
       <Button
         type="button"
         class="btn btn-outline-primary btn-lg"
@@ -143,6 +151,7 @@ const GoogleMapConvenienceStores = () => {
         {" "}
         再読み込み
       </Button>
+      <p>現在地付近のコンビニです．選択して「行く」を押してください</p>
 
       <ul>
         {convenienceStores.map((store, index) => (
