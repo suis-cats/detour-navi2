@@ -8,6 +8,8 @@ const usePageTransitionSound = () => {
   const router = useRouter();
 
   useEffect(() => {
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = "hidden";
     const handleRouteChange = () => {
       const audio = new Audio("/notification2.mp3");
       audio.play();
@@ -36,10 +38,10 @@ export default function Suggest() {
       className="d-flex justify-content-center "
       style={{ height: "100vh", backgroundColor: "#feffdf" }}
     >
-      <p>
-        {hour}:{minutes}
-      </p>
       <div>
+        <p>
+          {hour}:{minutes}
+        </p>
         <p className="mt-5 mb-5 font-bold h1 text-center text-top">
           寄り道提案システム
         </p>
@@ -60,7 +62,7 @@ export default function Suggest() {
           スクショをお願いします
         </p>
 
-        <div className="mb-20 mt-10">
+        <div className="mb-10 mt-10">
           <Button
             type="button"
             className="btn btn-info btn-lg"

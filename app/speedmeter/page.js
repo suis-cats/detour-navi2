@@ -200,6 +200,9 @@ export default function Speedometer() {
       <p className="mb-8" style={{ fontSize: "7vw" }}>
         自動でおすすめの寄り道場所を提案します
       </p>
+      <p className="mb-8" style={{ fontSize: "7vw" }}>
+        Apple WatchもしくはFitbitを装着してください
+      </p>
       <div>
         {/* <Button
           type="button"
@@ -234,7 +237,7 @@ export default function Speedometer() {
             averageSpeed * 3.6
           ).toFixed(2)} km/h </p>`
         ) : (
-          <p className="mb-40">"計測中"</p>
+          <p style={{ fontSize: "10vw", fontWeight: "bold" }}>"計測中"</p>
         )}
 
         <Button
