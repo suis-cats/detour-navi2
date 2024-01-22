@@ -103,11 +103,18 @@ export default function Speedometer() {
     setIsOver30kmh(newHistory.some((record) => record.speed >= 30 / 3.6));
     //過去に5km/h以上になったことがある
     setIsOver5kmh(newHistory.some((record) => record.speed >= 5 / 3.6));
+    //３分間の平均速度が30km/h以上になったことがある
 
-    //過去に5km/h以上になったことがあるかつ，平均速度が5km/h以下になった時
+    // 渋滞判定
+    // 過去に5km/h以上になったことがあり、現在の平均速度が5km/h以下で、最新の記録が3分以上前の場合
+    const hasBeenOver5kmh = newHistory.some(
+      (record) => record.speed >= 5 / 3.6
+    );
+    const isAverageSpeedBelow5kmh = totalSpeed / newHistory.length <= 5 / 3.6;
+    const isMoreThan3Minutes = now - newHistory[0].time >= 180000;
+
     setIsCongestionDetected(
-      newHistory.some((record) => record.speed >= 30 / 3.6) &&
-        totalSpeed / newHistory.length <= 30 / 3.6
+      hasBeenOver5kmh && isAverageSpeedBelow5kmh && isMoreThan3Minutes
     );
   }, [speed]);
 
