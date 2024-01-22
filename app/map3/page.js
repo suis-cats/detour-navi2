@@ -5,11 +5,12 @@ import { useRouter } from "next/navigation";
 
 const GoogleMapConvenienceStores = () => {
   const router = useRouter();
-
   const mapRef = useRef(null);
   const [map, setMap] = useState(null);
   const [convenienceStores, setConvenienceStores] = useState([]); // コンビニのリストを管理する状態
   const [markers, setMarkers] = useState([]);
+  var customIconUrl =
+    "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
 
   const ref = useRef();
 
@@ -51,9 +52,6 @@ const GoogleMapConvenienceStores = () => {
       gestureHandling: "greedy",
     });
     setMap(map);
-
-    var customIconUrl =
-      "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
 
     // 現在地のマーカーを追加
     const currentLocationMarker = new window.google.maps.Marker({
@@ -126,26 +124,15 @@ const GoogleMapConvenienceStores = () => {
       <div ref={mapRef} style={{ width: "100vw", height: "80vh" }} />
       <Button
         type="button"
-        class="btn btn-info btn-lg"
+        class="btn btn-info btn-bg
+        "
         onClick={() => router.push("/speedmeter")}
-        style={{
-          padding: "15px 30px", // ボタンの内部余白を増やす
-          fontSize: "20px", // フォントサイズを大きくする
-          width: "50%", // ボタンの幅を広げる
-          maxWidth: "300px", // 最大幅を設定する
-        }}
       >
         戻る
       </Button>
       <Button
         type="button"
-        class="btn btn-info btn-lg"
-        style={{
-          padding: "15px 30px", // ボタンの内部余白を増やす
-          fontSize: "20px", // フォントサイズを大きくする
-          width: "50%", // ボタンの幅を広げる
-          maxWidth: "300px", // 最大幅を設定する
-        }}
+        class="btn btn-info btn-bg"
         onClick={() => window.location.reload()}
       >
         {" "}
