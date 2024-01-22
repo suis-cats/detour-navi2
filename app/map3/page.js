@@ -127,6 +127,7 @@ const GoogleMapConvenienceStores = () => {
         class="btn btn-info btn-bg
         "
         onClick={() => router.push("/speedmeter")}
+        style={{ color: "black" }}
       >
         戻る
       </Button>
@@ -134,6 +135,7 @@ const GoogleMapConvenienceStores = () => {
         type="button"
         class="btn btn-info btn-bg"
         onClick={() => window.location.reload()}
+        style={{ color: "black" }}
       >
         {" "}
         再読み込み
