@@ -33,6 +33,7 @@ export default function Speedometer() {
 
   const [speedHistory, setSpeedHistory] = useState([]);
   const [averageSpeed, setAverageSpeed] = useState(0);
+  const [timer3, setTimer3] = useState(false);
 
   useEffect(() => {
     const watchId = navigator.geolocation.watchPosition(
@@ -101,8 +102,22 @@ export default function Speedometer() {
       ? newHistory.filter((record) => record.time >= firstOver30Record.time)
       : [];
 
+    let timer = null;
+
+    if (firstOver30Record && !timer3) {
+      // 3分後に実行されるアクション
+      const actionAfter3Minutes = () => {
+        console.log("3分が経過しました");
+        // ここに実行したい処理を記述
+        setTimer3(true);
+      };
+
+      // 3分間のタイマーを設定 (3分 = 180000ミリ秒)
+      timer = setTimeout(actionAfter3Minutes, 180000);
+    }
+
     // 条件に基づく平均速度の計算
-    if (filteredHistory.length > 0) {
+    if (filteredHistory.length > 0 && timer3) {
       const totalSpeed = filteredHistory.reduce(
         (acc, record) => acc + record.speed,
         0
@@ -214,7 +229,7 @@ export default function Speedometer() {
       </div> */}
 
       <div>
-        <p style={{ fontSize: "5vw" }}>3分間の平均速度(30km/h〜計測開始): </p>
+        <p style={{ fontSize: "5vw" }}>3分間の平均速度（30km~計測開始）: </p>
         <p style={{ fontSize: "10vw", fontWeight: "bold" }}>
           {averageSpeed ? `${(averageSpeed * 3.6).toFixed(2)} km/h` : "計測中"}
         </p>
