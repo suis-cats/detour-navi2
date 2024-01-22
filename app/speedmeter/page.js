@@ -154,24 +154,27 @@ export default function Speedometer() {
 
   return (
     <div>
-      <h1>そのまま運転し続けてください</h1>
-      <h1>運転を続けてください</h1>
+      <h1 className="text-center mb-8">寄り道提案システム</h1>
+      <h1 className="mb-8">そのまま運転を続けてください</h1>
+
+      <h1 className="mb-8">自動でおすすめの寄り道場所を提案します</h1>
       <div>
         <Button
           type="button"
-          className="btn btn-info"
+          className="btn btn-info mb-4"
           onClick={() => router.push("/end")}
         >
           運転終了
         </Button>
       </div>
       <h1>
-        現在の速度: {speed ? `${speed.toFixed(2)} m/s` : "0 m/s"}
+        現在の速度:
+        {/* {speed ? `${speed.toFixed(2)} m/s` : "0 m/s"} */}
         {"　"}
         {speed ? `${speed.toFixed(2) * 3.6} km/h` : "0 km/h"}
       </h1>
 
-      <div>
+      {/* <div>
         現在の座標:{" "}
         {`緯度: ${position.latitude.toFixed(
           5
@@ -181,23 +184,32 @@ export default function Speedometer() {
         {position.heading?.toFixed(2) ?? "N/A"}°, 精度:{" "}
         {position.accuracy.toFixed(2)} m, <br />
         高度の精度: {position.altitudeAccuracy?.toFixed(2) ?? "N/A"} m
-      </div>
-      <Button className="btn-info" onClick={downloadCSV}>
-        CSVとして保存
-      </Button>
+      </div> */}
+
       <div>
         <h2>
           3分間の平均速度:{" "}
           {averageSpeed ? `${(averageSpeed * 3.6).toFixed(2)} km/h` : "計測中"}
         </h2>
-        <p>3分間平均速度30km/h以下</p>
-        {averageSpeed <= 30 / 3.6 && <h2>YES</h2>}
+
+        <Button
+          className="btn btn-info mb-4"
+          onClick={() => setIsCongestionDetected(true)}
+        >
+          混雑検知テスト用
+        </Button>
+        {/* <p>3分間平均速度30km/h以下</p>
+        {averageSpeed <= 30 / 3.6 ? <h2>YES</h2> : <h2>NO</h2>}
+
         <p>速度5km/h以上</p>
-        {isOver5kmh && <h2>YES</h2>}
+        {isOver5kmh ? <h2>YES</h2> : <h2>NO</h2>}
         <p>渋滞！！</p>
-        {isCongestionDetected && <h2>YES</h2>}
-        <h>速度ログ</h>
-        <ul>
+        {isCongestionDetected ? <h2>YES</h2> : <h2>NO</h2>}
+        <h>速度ログ</h> */}
+        <Button className="btn-info mb-4" onClick={downloadCSV}>
+          CSVとして保存
+        </Button>
+        {/* <ul>
           {speedLog
             .slice()
             .reverse()
@@ -212,14 +224,7 @@ export default function Speedometer() {
                 </li>
               )
             )}
-        </ul>
-
-        <Button
-          className="btn btn-info mb-20"
-          onClick={() => setIsCongestionDetected(true)}
-        >
-          混雑検知テスト用
-        </Button>
+        </ul> */}
       </div>
     </div>
   );
