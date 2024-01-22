@@ -116,9 +116,10 @@ export default function Speedometer() {
       );
       const isAverageSpeedBelow5kmh = totalSpeed / newHistory.length <= 5 / 3.6;
       const isMoreThan3Minutes = now - newHistory[0].time >= 180000;
-      setIsCongestionDetected(
-        hasBeenOver5kmh && isAverageSpeedBelow5kmh && isMoreThan3Minutes
-      );
+      // 平均速度が30km/h以下の場合、交通渋滞と判断
+      if (averageSpeed <= 30) {
+        setIsCongestionDetected(true);
+      }
     }
 
     // 渋滞はんてい
