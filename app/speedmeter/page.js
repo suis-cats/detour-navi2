@@ -35,19 +35,22 @@ export default function Speedometer() {
   const [averageSpeed, setAverageSpeed] = useState(0);
   const [timer3, setTimer3] = useState(false);
 
-  //画面監視
   const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: undefined,
+    height: undefined,
   });
 
   useEffect(() => {
+    // クライアントサイドでのみ実行されるため、ここで `window` オブジェクトを使用できます。
     const handleResize = () => {
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
       });
     };
+
+    // 初期サイズを設定
+    handleResize();
 
     window.addEventListener("resize", handleResize);
 
