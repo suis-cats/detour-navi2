@@ -123,6 +123,7 @@ const GoogleMapConvenienceStores = () => {
     <div>
       <p style={{ margin: "0" }}>現在地付近のコンビニです</p>
       <p style={{ margin: "0" }}>ピンを選択してください</p>
+
       <div ref={mapRef} style={{ width: "100vw", height: "80vh" }} />
       <Button
         type="button"
