@@ -179,11 +179,11 @@ export default function Speedometer() {
         寄り道提案システム
       </p>
       <p className="mb-8" style={{ fontSize: "7vw" }}>
-        そのまま運転を続けてください．
+        そのまま運転を続けてください
       </p>
 
       <p className="mb-8" style={{ fontSize: "7vw" }}>
-        自動でおすすめの寄り道場所を提案します.
+        自動でおすすめの寄り道場所を提案します
       </p>
       <div>
         {/* <Button
