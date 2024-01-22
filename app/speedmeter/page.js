@@ -106,8 +106,8 @@ export default function Speedometer() {
 
     //過去に5km/h以上になったことがあるかつ，平均速度が5km/h以下になった時
     setIsCongestionDetected(
-      newHistory.some((record) => record.speed >= 5 / 3.6) &&
-        totalSpeed / newHistory.length <= 5 / 3.6
+      newHistory.some((record) => record.speed >= 30 / 3.6) &&
+        totalSpeed / newHistory.length <= 30 / 3.6
     );
   }, [speed]);
 
