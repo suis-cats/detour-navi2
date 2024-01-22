@@ -108,6 +108,17 @@ export default function Speedometer() {
         0
       );
       setAverageSpeed(totalSpeed / filteredHistory.length);
+
+      // 渋滞判定
+      // 過去に30km/h以上になったことがあり、現在の平均速度が30km/h以下で、最新の記録が3分以上前の場合
+      const hasBeenOver5kmh = newHistory.some(
+        (record) => record.speed >= 5 / 3.6
+      );
+      const isAverageSpeedBelow5kmh = totalSpeed / newHistory.length <= 5 / 3.6;
+      const isMoreThan3Minutes = now - newHistory[0].time >= 180000;
+      setIsCongestionDetected(
+        hasBeenOver5kmh && isAverageSpeedBelow5kmh && isMoreThan3Minutes
+      );
     }
 
     // 渋滞はんてい
@@ -115,19 +126,6 @@ export default function Speedometer() {
     setIsOver30kmh(newHistory.some((record) => record.speed >= 30 / 3.6));
     //過去に5km/h以上になったことがある
     setIsOver5kmh(newHistory.some((record) => record.speed >= 5 / 3.6));
-    //３分間の平均速度が30km/h以上になったことがある
-
-    // 渋滞判定
-    // 過去に30km/h以上になったことがあり、現在の平均速度が30km/h以下で、最新の記録が3分以上前の場合
-    const hasBeenOver5kmh = newHistory.some(
-      (record) => record.speed >= 5 / 3.6
-    );
-    const isAverageSpeedBelow5kmh = totalSpeed / newHistory.length <= 5 / 3.6;
-    const isMoreThan3Minutes = now - newHistory[0].time >= 180000;
-
-    setIsCongestionDetected(
-      hasBeenOver5kmh && isAverageSpeedBelow5kmh && isMoreThan3Minutes
-    );
   }, [speed]);
 
   const downloadCSV = () => {
@@ -177,7 +175,7 @@ export default function Speedometer() {
         寄り道提案システム
       </p>
       <p className="mb-8" style={{ fontSize: "7vw" }}>
-        そのまま運転を続けてください
+        そのまま運転を続けてください．
       </p>
 
       <p className="mb-8" style={{ fontSize: "7vw" }}>
