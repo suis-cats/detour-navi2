@@ -124,7 +124,7 @@ const GoogleMapConvenienceStores = () => {
       <div ref={mapRef} style={{ width: "100vw", height: "80vh" }} />
       <Button
         type="button"
-        class="btn btn-info btn-bg
+        class="btn btn-info btn-lg
         "
         onClick={() => router.push("/speedmeter")}
         style={{ color: "black" }}
@@ -133,7 +133,7 @@ const GoogleMapConvenienceStores = () => {
       </Button>
       <Button
         type="button"
-        class="btn btn-info btn-bg"
+        class="btn btn-info btn-lg"
         onClick={() => window.location.reload()}
         style={{ color: "black" }}
       >

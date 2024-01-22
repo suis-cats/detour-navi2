@@ -18,7 +18,7 @@ export default function Suggest() {
         <div className="mb-3 mt-20">
           <Button
             type="button"
-            className="btn btn-info"
+            className="btn btn-info btn-lg"
             onClick={() => router.push("/map3")}
           >
             近くのコンビニを表示
@@ -27,7 +27,7 @@ export default function Suggest() {
         <div>
           <Button
             type="button"
-            className="btn-info mb-60"
+            className="btn-info mb-60 btn-lg"
             onClick={() => router.push("/suggest2")}
           >
             寄りたくない
