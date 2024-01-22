@@ -35,7 +35,30 @@ export default function Speedometer() {
   const [averageSpeed, setAverageSpeed] = useState(0);
   const [timer3, setTimer3] = useState(false);
 
+  //画面監視
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
   useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isLandscape = windowSize.width > windowSize.height;
+
+  useEffect(() => {
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = "hidden";
     const watchId = navigator.geolocation.watchPosition(
       (position) => {
         const {
@@ -80,6 +103,20 @@ export default function Speedometer() {
     );
 
     return () => navigator.geolocation.clearWatch(watchId);
+  }, []);
+
+  const [isThirtyMinutesPassed, setIsThirtyMinutesPassed] = useState(false);
+
+  useEffect(() => {
+    if (isThirtyMinutesPassed) return;
+    const timer = setTimeout(() => {
+      console.log("30分経過しました");
+      setIsThirtyMinutesPassed(true);
+      // ここで実行したい任意の関数を呼び出す
+      setIsCongestionDetected(true);
+    }, 1800000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // 速度が変わるたびに履歴を更新
@@ -190,34 +227,43 @@ export default function Speedometer() {
 
   return (
     <div>
-      <p className="text-center mb-8" style={{ fontSize: "10vw" }}>
-        寄り道提案システム
-      </p>
-      <p className="mb-8" style={{ fontSize: "7vw" }}>
-        そのまま運転を続けてください
-      </p>
+      {" "}
+      {!isLandscape ? (
+        <div style={{ backgroundColor: "black" }}>
+          <p
+            className="text-center mb-8"
+            style={{ fontSize: "10vw", color: "grey" }}
+          >
+            寄り道提案システム
+          </p>
+          <p className="mb-8" style={{ fontSize: "7vw", color: "grey" }}>
+            そのまま運転を続けてください
+          </p>
 
-      <p className="mb-8" style={{ fontSize: "7vw" }}>
-        自動でおすすめの寄り道場所を提案します
-      </p>
-      <p className="mb-8" style={{ fontSize: "7vw" }}>
-        Apple WatchもしくはFitbitを装着してください
-      </p>
-      <div>
-        {/* <Button
+          <p className="mb-8" style={{ fontSize: "7vw", color: "grey" }}>
+            自動でおすすめの寄り道場所を提案します
+          </p>
+          <p style={{ fontSize: "7vw", color: "grey", margin: "0" }}>
+            運転中はApple WatchもしくはFitbitを装着してください
+          </p>
+          <p className="mb-8" style={{ fontSize: "3vw", color: "grey" }}>
+            Apple Watchの場合はサイクリングでワークアウトを開始してください
+          </p>
+          <div>
+            {/* <Button
           type="button"
           className="btn btn-info mb-4"
           onClick={() => router.push("/end")}
         >
           運転終了
         </Button> */}
-      </div>
-      <p style={{ fontSize: "10vw", fontWeight: "bold" }}>
-        現在の速度 {/* {speed ? `${speed.toFixed(2)} m/s` : "0 m/s"} */}
-        {speed ? `${(speed * 3.6).toFixed(2)} km/h` : "0 km/h"}
-      </p>
+          </div>
+          <p style={{ fontSize: "10vw", fontWeight: "bold", color: "grey" }}>
+            現在の速度 {/* {speed ? `${speed.toFixed(2)} m/s` : "0 m/s"} */}
+            {speed ? `${(speed * 3.6).toFixed(2)} km/h` : "0 km/h"}
+          </p>
 
-      {/* <div>
+          {/* <div>
         現在の座標:{" "}
         {`緯度: ${position.latitude.toFixed(
           5
@@ -229,24 +275,30 @@ export default function Speedometer() {
         高度の精度: {position.altitudeAccuracy?.toFixed(2) ?? "N/A"} m
       </div> */}
 
-      <div>
-        <p style={{ fontSize: "5vw" }}>3分間の平均速度（30km~計測開始）: </p>
+          <div>
+            <p style={{ fontSize: "5vw", color: "grey" }}>
+              3分間の平均速度（30km~計測開始）:{" "}
+            </p>
 
-        {averageSpeed ? (
-          `<p style={{ fontSize: "10vw", fontWeight: "bold" }}>${(
-            averageSpeed * 3.6
-          ).toFixed(2)} km/h </p>`
-        ) : (
-          <p style={{ fontSize: "10vw", fontWeight: "bold" }}>"計測中"</p>
-        )}
+            {averageSpeed ? (
+              `<p style={{ fontSize: "10vw", fontWeight: "bold" }}>${(
+                averageSpeed * 3.6
+              ).toFixed(2)} km/h </p>`
+            ) : (
+              <p
+                style={{ fontSize: "10vw", fontWeight: "bold", color: "grey" }}
+              >
+                "計測中"
+              </p>
+            )}
 
-        <Button
-          className="btn btn-info mb-4"
-          onClick={() => setIsCongestionDetected(true)}
-        >
-          提案テスト用
-        </Button>
-        {/* <p>3分間平均速度30km/h以下</p>d
+            <Button
+              className="btn btn-info mb-4"
+              onClick={() => setIsCongestionDetected(true)}
+            >
+              提案テスト用
+            </Button>
+            {/* <p>3分間平均速度30km/h以下</p>d
         {averageSpeed <= 30 / 3.6 ? <h2>YES</h2> : <h2>NO</h2>}
 
         <p>速度5km/h以上</p>
@@ -254,11 +306,12 @@ export default function Speedometer() {
         <p>渋滞！！</p>
         {isCongestionDetected ? <h2>YES</h2> : <h2>NO</h2>}
         <h>速度ログ</h> */}
-        <Button className="btn-info mb-4" onClick={downloadCSV}>
-          CSVとして保存
-        </Button>
+            <Button className="btn-info mb-4" onClick={downloadCSV}>
+              CSVとして保存
+            </Button>
+            <div className="m-60">　　　</div>
 
-        {/* <ul>
+            {/* <ul>
           {speedLog
             .slice()
             .reverse()
@@ -274,7 +327,37 @@ export default function Speedometer() {
               )
             )}
         </ul> */}
-      </div>
+          </div>
+        </div>
+      ) : (
+        <div
+          style={{ backgroundColor: "black", width: "100vw", height: "100vh" }}
+        >
+          <p style={{ fontSize: "10vw", fontWeight: "bold", color: "grey" }}>
+            速度 {/* {speed ? `${speed.toFixed(2)} m/s` : "0 m/s"} */}
+            {speed ? `${(speed * 3.6).toFixed(2)} km/h` : "0 km/h"}
+          </p>
+          <p style={{ fontSize: "5vw", color: "grey" }}>直近3分間の </p>
+          <div style={{ display: "flex", alignItems: "baseline" }}>
+            <span
+              style={{ fontSize: "10vw", fontWeight: "bold", color: "grey" }}
+            >
+              平均速度
+            </span>
+            {averageSpeed ? (
+              `<p style={{ fontSize: "10vw", fontWeight: "bold" }}>${(
+                averageSpeed * 3.6
+              ).toFixed(2)} km/h </p>`
+            ) : (
+              <p
+                style={{ fontSize: "10vw", fontWeight: "bold", color: "grey" }}
+              >
+                　計算中...
+              </p>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

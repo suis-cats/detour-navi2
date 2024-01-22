@@ -54,11 +54,11 @@ export default function Suggest() {
           コンビニで休憩しませんか？
         </p>
 
-        <p style={{ margin: "0vw", color: "red" }}>時刻記録のため</p>
-        <p style={{ fontSize: "7vw", margin: "0vw", color: "orange" }}>
+        <p style={{ margin: "0vw" }}>時刻記録のため</p>
+        <p style={{ fontSize: "7vw", margin: "0vw", color: "red" }}>
           この画面の
         </p>
-        <p style={{ fontSize: "7vw", margin: "0vw", color: "orange" }}>
+        <p style={{ fontSize: "7vw", margin: "0vw", color: "red" }}>
           スクショをお願いします
         </p>
 
