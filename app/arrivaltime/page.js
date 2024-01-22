@@ -16,7 +16,7 @@ export default function Arrivaltime() {
         <p className="text-5vh">9:50</p>
 
         <div className="mt-28">
-          <Button type="button" className="btn">
+          <Button type="button" className="btn btn-info">
             目的地変更
           </Button>
         </div>

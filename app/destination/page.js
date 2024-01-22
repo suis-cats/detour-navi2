@@ -9,7 +9,7 @@ export default function Destination() {
     >
       <div>
         <div className="mt-28">
-          <Button type="button" className="btn btn-lg">
+          <Button type="button" className="btn btn-lg btn-info">
             決定
           </Button>
         </div>

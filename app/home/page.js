@@ -60,12 +60,12 @@ export default function Home() {
         <h1>運転を続けてください</h1>
 
         <div className="mb-3 mt-20">
-          <Button id="gpsButton" type="button" className="btn-secondary">
+          <Button id="gpsButton" type="button" className="btn-info">
             GPSをリクエスト
           </Button>
         </div>
         <div>
-          <Button type="button" className="btn">
+          <Button type="button" className="btn btn-info">
             運転終了
           </Button>
         </div>

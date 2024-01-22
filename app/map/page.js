@@ -112,7 +112,7 @@ const MyMapComponent = ({ center, zoom }) => {
         const contentString = `
         <div>
             Google Mapに遷移します．
-          <Button type="button" class="btn btn-primary" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${markerInfo.lat},${markerInfo.lng}', '_blank')">行く</Button>
+          <Button type="button" class="btn btn-info" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${markerInfo.lat},${markerInfo.lng}', '_blank')">行く</Button>
         </div>
       `;
 

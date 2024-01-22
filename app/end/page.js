@@ -14,7 +14,10 @@ export default function Suggest() {
         <p className="mt-20">ありがとうございました</p>
         <p>実験は終了です</p>
         <p className="mt-20">
-          <Button className="btn-lg" onClick={() => router.push("/speedmeter")}>
+          <Button
+            className="btn-lg btn-info"
+            onClick={() => router.push("/speedmeter")}
+          >
             もう一度使う
           </Button>
         </p>

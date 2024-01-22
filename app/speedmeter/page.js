@@ -159,7 +159,7 @@ export default function Speedometer() {
       <div>
         <Button
           type="button"
-          className="btn btn-danger"
+          className="btn btn-info"
           onClick={() => router.push("/end")}
         >
           運転終了
@@ -182,7 +182,7 @@ export default function Speedometer() {
         {position.accuracy.toFixed(2)} m, <br />
         高度の精度: {position.altitudeAccuracy?.toFixed(2) ?? "N/A"} m
       </div>
-      <Button className="btn-success" onClick={downloadCSV}>
+      <Button className="btn-info" onClick={downloadCSV}>
         CSVとして保存
       </Button>
       <div>
