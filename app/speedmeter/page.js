@@ -93,7 +93,7 @@ export default function Speedometer() {
 
     // 最初の30km/h超えの記録を見つける
     const firstOver30Record = newHistory.find(
-      (record) => record.speed >= 5 / 3.6
+      (record) => record.speed >= 30 / 3.6
     );
 
     // 特定の時間以降の記録をフィルタリング
@@ -120,7 +120,8 @@ export default function Speedometer() {
       const hasBeenOver5kmh = newHistory.some(
         (record) => record.speed >= 30 / 3.6
       );
-      const isAverageSpeedBelow5kmh = totalSpeed / newHistory.length <= 5 / 3.6;
+      const isAverageSpeedBelow5kmh =
+        totalSpeed / newHistory.length <= 30 / 3.6;
       const isMoreThan3Minutes = now - newHistory[0].time >= 180000;
     }
 
