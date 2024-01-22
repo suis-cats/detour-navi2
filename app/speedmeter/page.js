@@ -244,7 +244,7 @@ export default function Speedometer() {
         >
           提案テスト用
         </Button>
-        {/* <p>3分間平均速度30km/h以下</p>
+        {/* <p>3分間平均速度30km/h以下</p>d
         {averageSpeed <= 30 / 3.6 ? <h2>YES</h2> : <h2>NO</h2>}
 
         <p>速度5km/h以上</p>
