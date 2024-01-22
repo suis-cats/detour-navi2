@@ -200,6 +200,9 @@ export default function Speedometer() {
       <p className="mb-8" style={{ fontSize: "7vw" }}>
         自動でおすすめの寄り道場所を提案します
       </p>
+      <p className="mb-8" style={{ fontSize: "7vw" }}>
+        Apple WatchもしくはFitbitを装着してください
+      </p>
       <div>
         {/* <Button
           type="button"
@@ -210,9 +213,7 @@ export default function Speedometer() {
         </Button> */}
       </div>
       <p style={{ fontSize: "10vw", fontWeight: "bold" }}>
-        現在の速度:
-        {/* {speed ? `${speed.toFixed(2)} m/s` : "0 m/s"} */}
-        {"　"}
+        現在の速度 {/* {speed ? `${speed.toFixed(2)} m/s` : "0 m/s"} */}
         {speed ? `${(speed * 3.6).toFixed(2)} km/h` : "0 km/h"}
       </p>
 
@@ -230,13 +231,14 @@ export default function Speedometer() {
 
       <div>
         <p style={{ fontSize: "5vw" }}>3分間の平均速度（30km~計測開始）: </p>
-        <p style={{ fontSize: "10vw", fontWeight: "bold" }}>
-          {averageSpeed ? (
-            `${(averageSpeed * 3.6).toFixed(2)} km/h`
-          ) : (
-            <p className="mb-40">"計測中"</p>
-          )}
-        </p>
+
+        {averageSpeed ? (
+          `<p style={{ fontSize: "10vw", fontWeight: "bold" }}>${(
+            averageSpeed * 3.6
+          ).toFixed(2)} km/h </p>`
+        ) : (
+          <p style={{ fontSize: "10vw", fontWeight: "bold" }}>"計測中"</p>
+        )}
 
         <Button
           className="btn btn-info mb-4"
