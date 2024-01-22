@@ -102,6 +102,12 @@ export default function Speedometer() {
     setIsOver30kmh(newHistory.some((record) => record.speed >= 30 / 3.6));
     //過去に5km/h以上になったことがある
     setIsOver5kmh(newHistory.some((record) => record.speed >= 5 / 3.6));
+
+    //過去に5km/h以上になったことがあるかつ，平均速度が5km/h以下になった時
+    setIsCongestionDetected(
+      newHistory.some((record) => record.speed >= 5 / 3.6) &&
+        totalSpeed / newHistory.length <= 5 / 3.6
+    );
   }, [speed]);
 
   const downloadCSV = () => {
@@ -140,12 +146,14 @@ export default function Speedometer() {
 
   useEffect(() => {
     if (isCongestionDetected) {
-      router.push("/map3");
+      downloadCSV;
+      router.push("/suggest");
     }
   }, [isCongestionDetected, router]);
 
   return (
     <div>
+      <h1>そのまま運転し続けてください</h1>
       <h1>
         現在の速度: {speed ? `${speed.toFixed(2)} m/s` : "0 m/s"}
         {"　"}
