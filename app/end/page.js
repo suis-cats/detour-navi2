@@ -12,7 +12,8 @@ export default function Suggest() {
     >
       <div>
         <p className="mt-20">ありがとうございました</p>
-        <p>実験は終了です</p>
+        <p>Slackにて</p>
+        <p>スクショと運転後アンケートをお願いします</p>
         <p className="mt-20">
           <Button
             className="btn-lg btn-info"

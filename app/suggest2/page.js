@@ -12,14 +12,23 @@ export default function Suggest() {
     >
       <div>
         <h1 className="mb-40 font-bold">ありがとうございます</h1>
-        <p className="mb-20 font-bold" style={{ fontSize: "7vw" }}>
-          今回は実験のため，好きなタイミングでいいので，コンビニに行くようにお願いします．
+        <p className="font-bold" style={{ fontSize: "7vw" }}>
+          すみませんが
+        </p>
+        <p className="font-bold" style={{ fontSize: "7vw" }}>
+          実験のため
+        </p>
+        <p className="font-bold" style={{ fontSize: "7vw" }}>
+          好きなタイミングでいいので
+        </p>
+        <p className="font-bold mb-20" style={{ fontSize: "7vw" }}>
+          コンビニに行ってください．
         </p>
         <Button
           className="btn-lg btn-info"
           onClick={() => router.push("/map3")}
         >
-          コンビニを検索
+          コンビニ
         </Button>
         <div className="mt-4 "> </div>
         <Button className="btn-lg btn-info" onClick={() => router.push("/end")}>
