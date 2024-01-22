@@ -154,10 +154,16 @@ export default function Speedometer() {
 
   return (
     <div>
-      <h1 className="text-center mb-8">寄り道提案システム</h1>
-      <h1 className="mb-8">そのまま運転を続けてください</h1>
+      <p className="text-center mb-8" style={{ fontSize: "10vw" }}>
+        寄り道提案システム
+      </p>
+      <p className="mb-8" style={{ fontSize: "7vw" }}>
+        そのまま運転を続けてください
+      </p>
 
-      <h1 className="mb-8">自動でおすすめの寄り道場所を提案します</h1>
+      <p className="mb-8" style={{ fontSize: "7vw" }}>
+        自動でおすすめの寄り道場所を提案します
+      </p>
       <div>
         <Button
           type="button"
