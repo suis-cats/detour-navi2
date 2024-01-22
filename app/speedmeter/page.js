@@ -91,12 +91,24 @@ export default function Speedometer() {
     console.log(speed);
     setSpeedHistory(newHistory);
 
-    // 平均速度を計算
-    const totalSpeed = newHistory.reduce(
-      (acc, record) => acc + record.speed,
-      0
+    // 最初の30km/h超えの記録を見つける
+    const firstOver30Record = newHistory.find(
+      (record) => record.speed >= 30 / 3.6
     );
-    setAverageSpeed(totalSpeed / newHistory.length);
+
+    // 特定の時間以降の記録をフィルタリング
+    const filteredHistory = firstOver30Record
+      ? newHistory.filter((record) => record.time >= firstOver30Record.time)
+      : [];
+
+    // 条件に基づく平均速度の計算
+    if (filteredHistory.length > 0) {
+      const totalSpeed = filteredHistory.reduce(
+        (acc, record) => acc + record.speed,
+        0
+      );
+      setAverageSpeed(totalSpeed / filteredHistory.length);
+    }
 
     // 渋滞はんてい
     //過去に30km/h以上になったことがある
@@ -106,7 +118,7 @@ export default function Speedometer() {
     //３分間の平均速度が30km/h以上になったことがある
 
     // 渋滞判定
-    // 過去に5km/h以上になったことがあり、現在の平均速度が5km/h以下で、最新の記録が3分以上前の場合
+    // 過去に30km/h以上になったことがあり、現在の平均速度が30km/h以下で、最新の記録が3分以上前の場合
     const hasBeenOver5kmh = newHistory.some(
       (record) => record.speed >= 5 / 3.6
     );
