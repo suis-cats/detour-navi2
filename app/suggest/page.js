@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function Suggest() {
   const router = useRouter();
 
-  //現在時刻
+  //現在時刻あ
   const now = new Date();
   const hour = now.getHours();
   const minutes = now.getMinutes();
