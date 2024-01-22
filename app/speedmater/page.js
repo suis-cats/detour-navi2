@@ -1,8 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { Button } from "react-bootstrap";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 export default function Speedometer() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   // スピードメーター
   const [speed, setSpeed] = useState(0);
   const [speedLog, setSpeedLog] = useState([]);
@@ -20,6 +25,7 @@ export default function Speedometer() {
   // 渋滞検知
 
   const [isOver5kmh, setIsOver5kmh] = useState(false);
+  const [isOver30kmh, setIsOver30kmh] = useState(false);
   const [isCongestionDetected, setIsCongestionDetected] = useState(false);
 
   const [isCongestion, setIsCongestion] = useState(false);
@@ -91,6 +97,12 @@ export default function Speedometer() {
       0
     );
     setAverageSpeed(totalSpeed / newHistory.length);
+
+    // 渋滞はんてい
+    //過去に30km/h以上になったことがある
+    setIsOver30kmh(newHistory.some((record) => record.speed >= 30 / 3.6));
+    //過去に5km/h以上になったことがある
+    setIsOver5kmh(newHistory.some((record) => record.speed >= 5 / 3.6));
   }, [speed]);
 
   const downloadCSV = () => {
@@ -126,6 +138,12 @@ export default function Speedometer() {
     link.click();
     document.body.removeChild(link);
   };
+
+  useEffect(() => {
+    if (isCongestionDetected) {
+      router.push("/map3");
+    }
+  }, [isCongestionDetected, router]);
 
   return (
     <div>
@@ -175,6 +193,8 @@ export default function Speedometer() {
               )
             )}
         </ul>
+
+        <button onClick={() => setIsCongestionDetected(true)}>混雑検知</button>
       </div>
     </div>
   );
