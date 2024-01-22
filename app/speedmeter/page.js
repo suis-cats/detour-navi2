@@ -165,13 +165,13 @@ export default function Speedometer() {
         自動でおすすめの寄り道場所を提案します
       </p>
       <div>
-        <Button
+        {/* <Button
           type="button"
           className="btn btn-info mb-4"
           onClick={() => router.push("/end")}
         >
           運転終了
-        </Button>
+        </Button> */}
       </div>
       <h1>
         現在の速度:
@@ -202,7 +202,7 @@ export default function Speedometer() {
           className="btn btn-info mb-4"
           onClick={() => setIsCongestionDetected(true)}
         >
-          混雑検知テスト用
+          提案テスト用
         </Button>
         {/* <p>3分間平均速度30km/h以下</p>
         {averageSpeed <= 30 / 3.6 ? <h2>YES</h2> : <h2>NO</h2>}

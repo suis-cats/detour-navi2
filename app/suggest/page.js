@@ -12,7 +12,10 @@ export default function Suggest() {
   const minutes = now.getMinutes();
 
   return (
-    <div className="d-flex justify-content-center " style={{ height: "100vh" }}>
+    <div
+      className="d-flex justify-content-center "
+      style={{ height: "100vh", backgroundColor: "#feffdf" }}
+    >
       <div>
         <p className="mt-5 mb-5 font-bold h1 text-center text-top">
           寄り道提案システム
@@ -26,9 +29,13 @@ export default function Suggest() {
           コンビニで休憩しませんか？
         </p>
 
-        <p style={{ margin: "0vw" }}>時刻記録のため</p>
-        <p style={{ fontSize: "7vw", margin: "0vw" }}>この画面の</p>
-        <p style={{ fontSize: "7vw", margin: "0vw" }}>スクショをお願いします</p>
+        <p style={{ margin: "0vw", color: "red" }}>時刻記録のため</p>
+        <p style={{ fontSize: "7vw", margin: "0vw", color: "orange" }}>
+          この画面の
+        </p>
+        <p style={{ fontSize: "7vw", margin: "0vw", color: "orange" }}>
+          スクショをお願いします
+        </p>
 
         <div className="mb-20 mt-10">
           <Button
