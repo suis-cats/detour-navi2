@@ -194,12 +194,12 @@ export default function Speedometer() {
           運転終了
         </Button> */}
       </div>
-      <h1>
+      <p style={{ fontSize: "10vw", fontWeight: "bold" }}>
         現在の速度:
         {/* {speed ? `${speed.toFixed(2)} m/s` : "0 m/s"} */}
         {"　"}
         {speed ? `${speed.toFixed(2) * 3.6} km/h` : "0 km/h"}
-      </h1>
+      </p>
 
       {/* <div>
         現在の座標:{" "}
@@ -214,10 +214,10 @@ export default function Speedometer() {
       </div> */}
 
       <div>
-        <h2>
-          3分間の平均速度:{" "}
+        <p style={{ fontSize: "5vw" }}>3分間の平均速度(30km/h〜計測開始): </p>
+        <p style={{ fontSize: "10vw", fontWeight: "bold" }}>
           {averageSpeed ? `${(averageSpeed * 3.6).toFixed(2)} km/h` : "計測中"}
-        </h2>
+        </p>
 
         <Button
           className="btn btn-info mb-4"
