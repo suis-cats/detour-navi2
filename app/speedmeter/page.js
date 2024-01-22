@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+
+import { useRouter } from "next/navigation";
 
 export default function Speedometer() {
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+
   // スピードメーター
   const [speed, setSpeed] = useState(0);
   const [speedLog, setSpeedLog] = useState([]);
