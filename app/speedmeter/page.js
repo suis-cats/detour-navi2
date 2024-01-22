@@ -93,7 +93,7 @@ export default function Speedometer() {
 
     // 最初の30km/h超えの記録を見つける
     const firstOver30Record = newHistory.find(
-      (record) => record.speed >= 30 / 3.6
+      (record) => record.speed >= 5 / 3.6
     );
 
     // 特定の時間以降の記録をフィルタリング
@@ -109,6 +109,11 @@ export default function Speedometer() {
       );
       setAverageSpeed(totalSpeed / filteredHistory.length);
 
+      // 平均速度が30km/h以下の場合、交通渋滞と判断
+      if ((averageSpeed * 3.6).toFixed(2) <= 5) {
+        setIsCongestionDetected(true);
+      }
+
       // 渋滞判定
       // 過去に30km/h以上になったことがあり、現在の平均速度が30km/h以下で、最新の記録が3分以上前の場合
       const hasBeenOver5kmh = newHistory.some(
@@ -116,10 +121,6 @@ export default function Speedometer() {
       );
       const isAverageSpeedBelow5kmh = totalSpeed / newHistory.length <= 5 / 3.6;
       const isMoreThan3Minutes = now - newHistory[0].time >= 180000;
-      // 平均速度が30km/h以下の場合、交通渋滞と判断
-      if (averageSpeed <= 30) {
-        setIsCongestionDetected(true);
-      }
     }
 
     // 渋滞はんてい
